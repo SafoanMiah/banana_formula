@@ -108,3 +108,6 @@ R2 = float(input("Average radius of the bottom curve (in cm):           "))
 k2 = float(input("Bottom curve extrusion (in cm):                       "))
 L2 = float(input("Length of the banana for the bottom curve (in cm):    "))
 ```
+
+---
+*This is all Jack's fault dc: `charlatansfolly`*
