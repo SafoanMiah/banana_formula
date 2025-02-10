@@ -63,6 +63,7 @@ $$
 $$
 
 <div><h2>5. Seperating each term for integration</h2></div>
+
 $$\int_{0}^{L} (R_{1}^2 - R_{2}^2) \, dx = (R_{1}^2 - R_{2}^2) L$$
 
 $$\int_{0}^{L} 2R_{1}k_{1} \sin\left(\frac{\pi x}{L_{1}}\right) \, dx$$
