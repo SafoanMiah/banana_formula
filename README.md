@@ -1,5 +1,6 @@
 # BANANA Formula
 **(VERY IMPORTANT NOTICE: This is as a joke, please dont take it seriously)**
+![image](https://github.com/user-attachments/assets/2f7ded91-9604-4465-b26a-c53510de3fcf)
 
 ### Simplifications: 
 1. Expand the squares:
