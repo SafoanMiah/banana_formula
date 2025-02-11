@@ -8,48 +8,76 @@
 
 <div><h2>1. Explanation:</h2></div>
 
-Consider two quadratic functions, $f(x)$ and $g(x)$, defined as:
+Consider the following **quartic** equasion to model a banana
+![image](https://github.com/user-attachments/assets/0a5faa2a-8341-406c-b0b9-ce589886ba39)
 
-$$f(x) = ax^2 + bx + c$$
-$$g(x) = px^2 + qx + r$$
+$$y = -A^2y^4 - B^2x^4 - C^2 - 2AB(y^2)(x^2) + 2AC(y^2) + 2BC(x^2)$$
+$$\text{Factorised : }y=-\left(A\left(y\right)^{2}+B\left(x\right)^{2}-C\right)^{2\ }$$
 
-* The functions $f(x)$ and $g(x)$ represent the upper and lower curves respectively.
-* The difference $f(x) - g(x)$ gives the vertical distance between the curves.
-* Integrating this difference from $u$ to $v$ gives the area between the curves.
+* Increasing ( A ) would lead to a steeper curve in the ( y )-direction, affecting how the banana's shape bulges outwards.
+* Increasing ( B ) would result in a broader shape, affecting how the banana's ends taper off and how wide the banana appears from the front view.
+* A larger value of ( C ) would raise the entire curve, making the banana appear longer or taller, while a smaller value would lower it, potentially making it look shorter.
 
-<div><h2>2. Area Between Curves:</h2></div>
+<div><h2>2. Area Within The Lines:</h2></div>
 
-$$\text{Area} = \int_{u}^{v} \left[ f(x) - g(x) \right] dx$$
+$$f(x,y) = (A(y)^2 + B(x)^2 - C)^2 + y$$
+$$f(x,y) <0$$
+<div align="center">
+<img src="https://github.com/user-attachments/assets/8fd4ee2c-cb40-4054-a812-659c72417e5f">
+</div>
 
-Subtracting the two functions:
+<div><h2>3. Solving For Area</h2></div>
 
-$$f(x) - g(x) = (a - p)x^2 + (b - q)x + (c - r)$$
+1. Setting  up the inequality
+   * Begining with the inequality written as : $(A(y)^2 + B(x)^2 - C)^2$
+   * Let $k = A(y)^2 + B(x)^2 - C$ we keed to find the region where its $<-y$
+   * Since $y<0$ we can rewrite it as $-\sqrt{-y} < k < \sqrt{-y}$
+   * Substituting back for $k : -\sqrt{-y} < A(y)^2 + B(x)^2 - C < \sqrt{-y}$
+   * From this we can also form the following inequalities $B(x) > \sqrt{C-\sqrt{-y}-A(y)^2}$ and $B(x) < \sqrt{C+\sqrt{-y}-A(y)^2}$
+2. Integration
+   * We'll need a double integral with bouds being dependant on values of ( A, B, C )
+   * $\text{Area} = \iint_{R} dx \, dy$
+   * Where $R$ is the region defined by: $-\sqrt{-y} < A(y)^2 + B(x)^2 - C < \sqrt{-y}$ and $y < 0$
+   * The exact evaluation of the integral will depend on the specific form of $A$ and $B$. However, the general approach is to integrate over the $x$-bounds for each $y$-slice, where $x_1(y)$ and $x_2(y)$ are the bounds on $x$ for each $y$.
+3. Final equasion
 
-Taking the derivative:
-
-$$\left[ f(x) - g(x) \right]' = 2(a - p)x + (b - q)$$
-<div><h2>4. Surface Area Formula:</h2></div>
-
-The surface area of revolution around the x-axis is given by:
-
-$$\text{Surface Area} = \int_{u}^{v} 2\pi \left[ f(x) - g(x) \right] \sqrt{1 + \left( \left[ f(x) - g(x) \right]' \right)^2} dx$$
-
-<div><h2>5. Python Script for Calculation:</h2></div>
+$$\text{Solve for : } x_1(y) = B^{-1}(\sqrt{C+\sqrt{-y}-A(y)^2})$$
+$$\text{Solve for : } x_2(y) = B^{-1}(\sqrt{C-\sqrt{-y}-A(y)^2})$$
+$$\text{Setup and Evaluate : } \int_{-\infty}^{0} \int_{x_1(y)}^{x_2(y)} dx \, dy$$
+     
+<div><h2>4. Python Script for Calculation:</h2></div>
 
 ```python
 import numpy as np
-from scipy.integrate import quad
+import scipy.integrate as integrate
 
-# Functions
-f = lambda x, a, b, c: a*x**2 + b*x + c
-g = lambda x, p, q, r: p*x**2 + q*x + r
+# Define parameters
+A = float(input('A: '))
+B = float(input('B: '))
+C = float(input('C: '))
 
-def surface_area(a, b, c, p, q, r, u, v):
-    def integrand(x):
-        diff = f(x, a, b, c) - g(x, p, q, r)
-        derivative = 2*(a - p)*x + (b - q)
-        return 2 * np.pi * diff * np.sqrt(1 + derivative**2)
+# Define the bounds for x as functions of y
+def x1(y):
+    return (np.sqrt(C + np.sqrt(-y) - A * y**2)) / B
 
-    area, _ = quad(integrand, u, v)
-    return area
+def x2(y):
+    return (np.sqrt(C - np.sqrt(-y) - A * y**2)) / B
+
+# Define the region of integration
+def integrand(x, y):
+    return 1
+
+# Limits for y (since y < 0)
+y_min = -10
+y_max = 0
+
+# Perform the double integration
+sa, error = integrate.dblquad(
+    integrand, 
+    y_min, y_max, 
+    lambda y: x1(y), 
+    lambda y: x2(y)
+)
+
+print(f"Calculated Surface Area: {sa}")
 ```
