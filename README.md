@@ -1,5 +1,5 @@
 <div align="center">
-   <h1>Surface Area Between Two Parabolas</h1>
+   <h1>Banana Equasion</h1>
    
    <b>NOTE: This is a mathematical explanation for surface area calculation between two quadratic functions.</b>
    
